@@ -9,9 +9,7 @@ class StoragesController extends \BaseController
      */
     public function index()
     {
-        $storages = Storage::all();
-
-        return View::make('storages.index', compact('storages'));
+        return View::make('storages.index');
     }
 
     /**
@@ -22,6 +20,55 @@ class StoragesController extends \BaseController
     public function create()
     {
         return View::make('storages.create');
+    }
+
+    /**
+     * Add / Subtract an item from a storage
+     *
+     * @return Response
+     */
+    public function operate()
+    {
+        // Storage
+        $storage = Storage::findOrFail(Input::get('storageId'));
+        // Item
+        $item = Item::findOrFail(Input::get('itemId'));
+        // Quantity
+        $quantity = Input::get('quantity');
+        // Price
+        $price = Input::get('price');
+        // Operation
+        $operation = Input::get('operation', 'add');
+
+        // Own?
+        if ($storage->user_id == Auth::user()->id) {
+            // (Subtract) Storage has that items?
+            $total = $storage->items()->where('items.id', $item->id)->sum('item_storage.quantity');
+            if ($operation == 'add' || $total >= $quantity) {
+                // Add / Subtract
+                if ($operation == 'subtract') {
+                    // Negative quantity
+                    $quantity = -1 * abs($quantity);
+                    // Negative price (auto-calc)
+                    $price = -1 * ($item->getUnityPrice(Auth::user()->id) * abs($quantity));
+                }
+                $storage->items()->attach($item->id, array('quantity' => $quantity, 'price' => $price));
+                // Message
+                if ($operation == 'subtract') {
+                    Flash::success('Items subtracted!');
+                } else {
+                    Flash::success('Items added!');
+                }
+            } else {
+                // Message
+                Flash::error("Storage '".$storage->name."' doest' contain ".$quantity." '".$item->name."', just ".$total.".");
+            }
+        } else {
+            // Message
+            Flash::error('Storage not found');
+        }
+
+        return Redirect::to('/');
     }
 
     /**
@@ -110,14 +157,14 @@ class StoragesController extends \BaseController
     }
 
     /**
-     * Show a list of all the users formatted for Datatables.
+     * Show a list of all the storages formatted for Datatables.
      *
      * @return Datatables JSON
      */
     public function datatables()
     {
-        return Datatable::collection(Storage::all())
-        ->showColumns('id')
+        return Datatable::collection(Storage::mine()->get())
+
         ->addColumn('name',function ($model) {
             return HTML::link(route('storages.view', $model->id), $model->name);
         })
@@ -128,7 +175,7 @@ class StoragesController extends \BaseController
             return $model->itemsWorth." €";
         })
         ->searchColumns('name')
-        ->orderColumns('id', 'name', 'items', 'worth')
+        ->orderColumns('name', 'items', 'worth')
         ->make();
     }
 

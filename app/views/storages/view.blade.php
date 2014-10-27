@@ -38,7 +38,7 @@
                     {{ Form::textField('name', 'Name') }}
 
                     <div class="form-group">
-                        <div class="col-sm-10 col-sm-offset-2">
+                        <div class="col-sm-8 col-sm-offset-4">
                             {{ Form::submit('Save', array('class' => 'btn btn-primary')) }}
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                             </table>
                         @else
                             <blockquote>
-                                <p>This storage does has an item history</p>
+                                <p>This storage doesn't has an item history</p>
                             </blockquote>
                         @endif
                    </div>

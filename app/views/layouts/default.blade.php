@@ -25,6 +25,8 @@
         {{ HTML::style('assets/css/bootstrap-theme.min.css') }}
         {{ HTML::style('assets/css/dataTables.bootstrap.css') }}
         {{ HTML::style('assets/css/bootstrap-switch.min.css') }}
+        {{ HTML::style('assets/css/select2.css') }}
+        {{ HTML::style('assets/css/select2-bootstrap.css') }}
         {{ HTML::style('assets/css/custom.css') }}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -40,6 +42,7 @@
         {{ HTML::script('assets/js/jquery.dataTables.min.js') }}
         {{ HTML::script('assets/js/dataTables.bootstrap.js') }}
         {{ HTML::script('assets/js/bootstrap-switch.min.js') }}
+        {{ HTML::script('assets/js/select2.min.js') }}
         {{ HTML::script('assets/js/init.js') }}
 
         <!-- Favicon -->

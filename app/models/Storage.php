@@ -58,4 +58,9 @@ class Storage extends \Eloquent
         return 0;
     }
 
+    public function scopeMine($query)
+    {
+        return $query->where('user_id', Auth::user()->id);
+    }
+
 }

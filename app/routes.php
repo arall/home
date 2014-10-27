@@ -31,6 +31,11 @@ Route::group(array('prefix' => 'storages', 'before' => 'auth'), function () {
         'as' => 'storages.index',
         'uses' => 'StoragesController@index',
     ]);
+    //Add / subtrack items
+    Route::post('operate', [
+        'as' => 'storages.operate',
+        'uses' => 'StoragesController@operate',
+    ]);
     //New
     Route::get('new', [
         'as' => 'storages.new',
@@ -58,6 +63,48 @@ Route::group(array('prefix' => 'storages', 'before' => 'auth'), function () {
     ]);
 });
 
+/** ------------------------------------------
+ *  Items
+ *  ------------------------------------------
+ */
+Route::group(array('prefix' => 'items', 'before' => 'auth'), function () {
+    Route::get('/', [
+        'as' => 'items.index',
+        'uses' => 'ItemsController@index',
+    ]);
+    //Save
+    Route::post('save', [
+        'as' => 'items.save',
+        'uses' => 'ItemsController@save',
+    ]);
+    //View
+    Route::get('view/{id}', [
+        'as' => 'items.view',
+        'uses' => 'ItemsController@show',
+    ])->where('id', '[0-9]+');
+    //Delete
+    Route::get('delete/{id}', [
+        'as' => 'items.delete',
+        'uses' => 'ItemsController@delete',
+    ])->where('id', '[0-9]+');
+    //Datatables
+    Route::get('datatables', [
+        'as' => 'items.datatables',
+        'uses' => 'ItemsController@datatables',
+    ]);
+});
+
+/** ------------------------------------------
+ *  Ingredients Routes
+ *  ------------------------------------------
+ */
+Route::group(array('prefix' => 'ingredients', 'before' => 'auth'), function () {
+    //Datatables
+    Route::get('ajax', [
+        'as' => 'ingredients.ajax',
+        'uses' => 'IngredientsController@ajax',
+    ]);
+});
 /** ------------------------------------------
  *  Register Routes
  *  ------------------------------------------

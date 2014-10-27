@@ -57,7 +57,7 @@ if (! function_exists ( 'fieldWrapper' )) {
         $out = '<div class="form-group';
             $out .= fieldError($name) . '">';
             $out .= fieldLabel($name, $label);
-            $out .= '<div class="col-sm-10">';
+            $out .= '<div class="col-sm-8">';
                 $out .= $element;
                 $out .= fieldErrorHelpblock($name);
             $out .= '</div>';
@@ -100,7 +100,7 @@ if (! function_exists ( 'fieldLabel' )) {
 
         $name = str_replace('[]', '', $name);
 
-        $out = '<label for="id-field-' . $name . '" class="control-label col-sm-2 control-label">';
+        $out = '<label for="id-field-' . $name . '" class="control-label col-sm-4 control-label">';
         $out .= $label . '</label>';
 
         return $out;

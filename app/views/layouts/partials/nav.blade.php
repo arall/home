@@ -22,7 +22,10 @@
                 </li>
                 @if(Auth::user())
                     <li>
-                        {{ HTML::link(route('storages.index'), 'Storages') }}
+                        {{ HTML::link(route('storages.index'), 'My Storages') }}
+                    </li>
+                    <li>
+                        {{ HTML::link(route('items.index'), 'My Items') }}
                     </li>
                     @if(Auth::user()->role_id == 1)
                         <li>

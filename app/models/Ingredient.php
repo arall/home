@@ -10,14 +10,14 @@ class Ingredient extends \Eloquent
     protected $table = 'ingredients';
 
     public static $rules = [
-        'name' => 'required'
+        'name' => 'required|unique:ingredients'
     ];
 
     protected $fillable = ['name'];
 
     public function items()
     {
-        return $this->belongsToMany('Item');
+        return $this->belongsToMany('Item', 'ingredient_item', 'ingredient_id', 'item_id')->withTimestamps();
     }
 
 }

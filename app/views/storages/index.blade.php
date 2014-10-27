@@ -2,7 +2,7 @@
 
 @section('title')
 @parent
-:: Storages
+:: My storages
 @stop
 
 @section('content')
@@ -20,6 +20,6 @@
     </h2>
 </div>
 
-{{ Datatable::table()->addColumn('id', 'Name', 'Items', 'Worth')->setUrl(route('storages.datatables'))->render() }}
+{{ Datatable::table()->addColumn('Name', 'Items', 'Worth')->setUrl(route('storages.datatables'))->render() }}
 
 @stop
