@@ -41,6 +41,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
     /**
      * Rules
+     *
      * @var array
      */
     public static $rules = array(
@@ -75,6 +76,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
     /**
      * Role relation
+     *
+     * @return Role
      */
     public function role()
     {
@@ -83,6 +86,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
     /**
      * Storages relation
+     *
+     * @return array Storage
      */
     public function storages()
     {

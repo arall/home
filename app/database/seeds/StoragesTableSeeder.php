@@ -7,10 +7,10 @@ class StoragesTableSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
-
-        Storage::truncate();
+        DB::table('storages')->truncate();
         DB::table('item_storage')->truncate();
+
+        $faker = Faker::create();
 
         foreach (range(1, 2) as $index) {
             $storage = Storage::create([

@@ -14,7 +14,7 @@
                 {{ Form::open(array('route' => 'storages.operate', 'class' => 'form-horizontal', 'role' => 'form')) }}
 
                     <!-- Storage -->
-                    {{ Form::selectField('storageId', 'Storage', Storage::mine()->lists('name', 'id'), null, array('class' => 'form-control select2')) }}
+                    {{ Form::selectField('storageId', 'Storage', Auth::user()->storages()->lists('name', 'id'), null, array('class' => 'form-control select2')) }}
 
                     <!-- Item -->
                     {{ Form::selectField('itemId', 'Item', Item::lists('name', 'id'), null, array('class' => 'form-control select2')) }}
@@ -65,7 +65,7 @@
                     {{ Form::hidden('operation', 'subtract') }}
 
                     <!-- Storage -->
-                    {{ Form::selectField('storageId', 'Storage', Storage::mine()->lists('name', 'id'), null, array('class' => 'form-control select2')) }}
+                    {{ Form::selectField('storageId', 'Storage', Auth::user()->storages()->lists('name', 'id'), null, array('class' => 'form-control select2')) }}
 
                     <!-- Item -->
                     {{ Form::selectField('itemId', 'Item', Item::lists('name', 'id'), null, array('class' => 'form-control select2')) }}

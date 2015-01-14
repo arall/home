@@ -7,9 +7,10 @@ class ItemTypesTableSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
 
-        ItemType::truncate();
+        DB::table('item_types')->truncate();
+
+        $faker = Faker::create();
 
         foreach (range(1, 10) as $index) {
             ItemType::create([

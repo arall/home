@@ -4,34 +4,18 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('users')->delete();
+        DB::table('users')->truncate();
 
-        $users = array(
-            array(
-                'status'                => 1,
-                'role_id'               => 1,
-                'username'              => 'admin',
-                'email'                 => 'admin@example.org',
-                'password'              => Hash::make('admin'),
-                'confirmed'             => 1,
-                'confirmation_code'     => md5(microtime().Config::get('app.key')),
-                'created_at'            => new DateTime,
-                'updated_at'            => new DateTime,
-            ),
-            array(
-                'status'                => 1,
-                'role_id'               => 2,
-                'username'              => 'user',
-                'email'                 => 'user@example.org',
-                'password'              => Hash::make('user'),
-                'confirmed'             => 1,
-                'confirmation_code'     => md5(microtime().Config::get('app.key')),
-                'created_at'            => new DateTime,
-                'updated_at'            => new DateTime,
-            )
-        );
-
-        DB::table('users')->insert($users);
+        foreach (Role::all() as $role) {
+            $user               = new User();
+            $user->role_id      = $role->id;
+            $user->status       = 1;
+            $user->username     = strtolower($role->name);
+            $user->email        = $user->username.'@home.local';
+            $user->password     = $user->username;
+            $user->confirmed    = 1;
+            $user->save();
+        }
     }
 
 }

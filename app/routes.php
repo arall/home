@@ -12,8 +12,10 @@
 */
 
 // Home
-Route::get('/', function () {
-    return View::make('home');
+Route::group(array('before' => 'auth'), function () {
+    Route::get('/', function () {
+        return View::make('home');
+    });
 });
 
 /** ------------------------------------------
@@ -109,7 +111,7 @@ Route::group(array('prefix' => 'ingredients', 'before' => 'auth'), function () {
  *  Register Routes
  *  ------------------------------------------
  */
-Route::get('register', 	[
+Route::get('register',    [
     'as' => 'register',
     'uses' => 'RegisterController@index',
 ]);

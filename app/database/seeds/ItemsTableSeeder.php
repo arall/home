@@ -8,12 +8,12 @@ class ItemsTableSeeder extends Seeder
 {
     public function run()
     {
+        DB::table('items')->truncate();
+        DB::table('ingredient_item')->truncate();
+
         $faker = Faker::create();
         $faker->addProvider(new FakerProvider\Barcode($faker));
         $faker->addProvider(new FakerProvider\Lorem($faker));
-
-        Item::truncate();
-        DB::table('ingredient_item')->truncate();
 
         foreach (range(1, 10) as $index) {
             $item = Item::create([

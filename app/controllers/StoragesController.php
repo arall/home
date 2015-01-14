@@ -41,7 +41,7 @@ class StoragesController extends \BaseController
         $operation = Input::get('operation', 'add');
 
         // Own?
-        if ($storage->user_id == Auth::user()->id) {
+        if ($storage->isMine()) {
             // (Subtract) Storage has that items?
             $total = $storage->items()->where('items.id', $item->id)->sum('item_storage.quantity');
             if ($operation == 'add' || $total >= $quantity) {
@@ -82,7 +82,7 @@ class StoragesController extends \BaseController
         if ($id) {
             $storage = Storage::find($id);
             // Own?
-            if ($storage->user_id != Auth::user()->id) {
+            if (!$storage->isMine()) {
                 // Message
                 Flash::error('Storage not found');
 
@@ -112,7 +112,7 @@ class StoragesController extends \BaseController
         // Check if the form validates with success.
         if ($validator->passes()) {
             // Own?
-            if (isset($storage) && $storage->user_id == Auth::user()->id) {
+            if (isset($storage) && $storage->isMine()) {
                 // Save model
                 $storage->update($data);
                 // Message
@@ -144,7 +144,7 @@ class StoragesController extends \BaseController
     {
         $storage = Storage::find($id);
         // Own?
-        if ($storage->user_id == Auth::user()->id) {
+        if ($storage->isMine()) {
             $storage->delete();
             // Message
             Flash::success('Storage deleted successfully');
@@ -163,7 +163,7 @@ class StoragesController extends \BaseController
      */
     public function datatables()
     {
-        return Datatable::collection(Storage::mine()->get())
+        return Datatable::collection(Auth::user()->storages)
 
         ->addColumn('name',function ($model) {
             return HTML::link(route('storages.view', $model->id), $model->name);
